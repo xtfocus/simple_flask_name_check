@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Result</title>
+</head>
+<body>
+    {% if search_result %}
+        {% if search_result['true_record'] %}
+            <p>You searched for '{{ search_result['search_term'] }}'</p>  <!-- Added this line -->
+            <h2>True Record:</h2>
+            <p>Uni ID: {{ search_result['true_record'][0] }}</p>
+            <p>Real Name: {{ search_result['true_record'][1] }}</p>
+        {% else %}
+            <p>No match found.</p>
+        {% endif %}
+
+        {% if search_result['synonym_record'] %}
+            <h2>Synonyms:</h2>
+            <table border="1">
+                <tr>
+                    <th>Synonym Text</th>
+                    <th>Editor</th>
+                    <th>Created Time</th>
+                </tr>
+                {% for synonym in search_result['synonym_record'] %}
+                    <tr>
+                        <td>{{ synonym[0] }}</td>
+                        <td>{{ synonym[1] }}</td>
+                        <td>{{ synonym[2] }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <p>No synonyms found.</p>
+        {% endif %}
+    {% else %}
+        <p>You searched for '{{ search_result['search_term'] }}'</p>  <!-- Added this line -->
+        <p>No result found.</p>
+    {% endif %}
+
+    <a href="/">Back to Home</a>
+</body>
+</html>
+
